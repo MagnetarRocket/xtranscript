@@ -1,15 +1,15 @@
-# st - simple terminal
+# xtranscript - simple terminal
 # See LICENSE file for copyright and license details.
 
 include config.mk
 
-SRC = st.c
+SRC = xtranscript.c
 OBJ = ${SRC:.c=.o}
 
-all: options st
+all: options xtranscript
 
 options:
-	@echo st build options:
+	@echo xtranscript build options:
 	@echo "CFLAGS   = ${CFLAGS}"
 	@echo "LDFLAGS  = ${LDFLAGS}"
 	@echo "CC       = ${CC}"
@@ -23,38 +23,38 @@ config.h:
 
 ${OBJ}: config.h config.mk
 
-st: ${OBJ}
+xtranscript: ${OBJ}
 	@echo CC -o $@
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
 	@echo cleaning
-	@rm -f st ${OBJ} st-${VERSION}.tar.gz
+	@rm -f xtranscript ${OBJ} xtranscript-${VERSION}.tar.gz
 
 dist: clean
 	@echo creating dist tarball
-	@mkdir -p st-${VERSION}
-	@cp -R LICENSE Makefile README config.mk config.def.h st.info st.1 ${SRC} st-${VERSION}
-	@tar -cf st-${VERSION}.tar st-${VERSION}
-	@gzip st-${VERSION}.tar
-	@rm -rf st-${VERSION}
+	@mkdir -p xtranscript-${VERSION}
+	@cp -R LICENSE Makefile README config.mk config.def.h xtranscript.info xtranscript.1 ${SRC} xtranscript-${VERSION}
+	@tar -cf xtranscript-${VERSION}.tar xtranscript-${VERSION}
+	@gzip xtranscript-${VERSION}.tar
+	@rm -rf xtranscript-${VERSION}
 
 install: all
 	@echo installing executable file to ${DESTDIR}${PREFIX}/bin
 	@mkdir -p ${DESTDIR}${PREFIX}/bin
-	@cp -f st ${DESTDIR}${PREFIX}/bin
-	@chmod 755 ${DESTDIR}${PREFIX}/bin/st
+	@cp -f xtranscript ${DESTDIR}${PREFIX}/bin
+	@chmod 755 ${DESTDIR}${PREFIX}/bin/xtranscript
 	@echo installing manual page to ${DESTDIR}${MANPREFIX}/man1
 	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
-	@sed "s/VERSION/${VERSION}/g" < st.1 > ${DESTDIR}${MANPREFIX}/man1/st.1
-	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/st.1
-	@echo Please see the README file regarding the terminfo entry of st.
-	@tic -s st.info
+	@sed "s/VERSION/${VERSION}/g" < xtranscript.1 > ${DESTDIR}${MANPREFIX}/man1/xtranscript.1
+	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/xtranscript.1
+	@echo Please see the README file regarding the terminfo entry of xtranscript.
+	@tic -s xtranscript.info
 
 uninstall:
 	@echo removing executable file from ${DESTDIR}${PREFIX}/bin
-	@rm -f ${DESTDIR}${PREFIX}/bin/st
+	@rm -f ${DESTDIR}${PREFIX}/bin/xtranscript
 	@echo removing manual page from ${DESTDIR}${MANPREFIX}/man1
-	@rm -f ${DESTDIR}${MANPREFIX}/man1/st.1
+	@rm -f ${DESTDIR}${MANPREFIX}/man1/xtranscript.1
 
 .PHONY: all options clean dist install uninstall
